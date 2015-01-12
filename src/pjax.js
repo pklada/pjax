@@ -421,9 +421,7 @@
   , loadUrl: function(href, options) {
       this.log("load href", href, options)
 
-      Pjax.trigger(document, "pjax:send", options);
-
-      console.log('loadurl');
+      Pjax.trigger(document, "pjax:send", options); 
 
       // Do the request
       this.doRequest(href, function(html) {
