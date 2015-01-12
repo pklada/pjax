@@ -231,9 +231,7 @@
         switch (el.tagName.toLowerCase()) {
         case "a": 
           // only attach link if el does not already have link attached
-          if (el.getAttribute("data-pjax-enabled")) {
-            return
-          } else {
+          if (!el.getAttribute("data-pjax-enabled")) {
             this.attachLink(el)
           }
           break
