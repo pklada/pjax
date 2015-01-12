@@ -229,7 +229,13 @@
   , parseDOM: function(el) {
       Pjax.forEachEls(this.getElements(el), function(el) {
         switch (el.tagName.toLowerCase()) {
-        case "a": this.attachLink(el)
+        case "a": 
+          // only attach link if el does not already have link attached
+          if (el.getAttribute("data-pjax-enabled")) {
+            return
+          } else {
+            this.attachLink(el)
+          }
           break
         case "form":
           // todo
@@ -241,7 +247,15 @@
       }, this)
     }
 
+  , refresh: function() {
+    this.parseDOM(document);
+  }
+
   , attachLink: function(el) {
+
+      // indicate link has been pjaxified
+      el.setAttribute("data-pjax-enabled", "true");
+
       Pjax.on(el, "click", function(event) {
         //var el = event.currentTarget
 
@@ -410,6 +424,8 @@
       this.log("load href", href, options)
 
       Pjax.trigger(document, "pjax:send", options);
+
+      console.log('loadurl');
 
       // Do the request
       this.doRequest(href, function(html) {
